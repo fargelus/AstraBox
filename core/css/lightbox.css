@@ -1,6 +1,6 @@
-.overlay {
+.lightbox-container {
   height: 100%;
-  background: #0e0e0e;
+  background-color: rgba(14, 14, 14, .85);
   width: 100%;
   position: fixed;
   left: 0;
@@ -8,14 +8,12 @@
   z-index: 1;
 }
 
-a[data-lightbox].active img {
+.lightbox-img {
   position: absolute;
-  top: 0;
   bottom: 0;
-  left: 0;
   right: 0;
-  margin: auto;
   z-index: 2;
+  transform: translate(-50%, -50%);
   width: auto;
   height: auto;
 }
