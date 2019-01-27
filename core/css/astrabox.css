@@ -1,4 +1,4 @@
-.lightbox-container {
+.astrabox-container {
   height: 100%;
   background-color: rgba(14, 14, 14, .85);
   width: 100%;
@@ -8,10 +8,10 @@
   z-index: 1;
 }
 
-.lightbox-img {
+.astrabox-img {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  left: 0;
+  top: 0;
   z-index: 2;
   transform: translate(-50%, -50%);
   width: auto;
