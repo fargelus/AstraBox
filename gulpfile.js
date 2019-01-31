@@ -12,31 +12,25 @@ const uglify = require('gulp-uglify-es').default;
 const paths = {
   styles: './src/styl/*.styl',
   scripts: './src/js/*.js',
-  dest: './dist'
+  dest: './dist',
 };
 
-gulp.task('clean', () => {
-  return del(paths.dest);
-});
+gulp.task('clean', () => del(paths.dest));
 
-gulp.task('styles', () => {
-  return gulp.src(paths.styles)
-      .pipe(sourcemaps.init())
-      .pipe(stylus({
-        compress: true,
-      }))
-      .pipe(rename('jquery.astrabox.min.css'))
-      .pipe(sourcemaps.write('.'))
-      .pipe(gulp.dest(paths.dest));
-});
+gulp.task('styles', () => gulp.src(paths.styles)
+  .pipe(sourcemaps.init())
+  .pipe(stylus({
+    compress: true,
+  }))
+  .pipe(rename('jquery.astrabox.min.css'))
+  .pipe(sourcemaps.write('.'))
+  .pipe(gulp.dest(paths.dest)));
 
-gulp.task('scripts', () => {
-  return gulp.src(paths.scripts)
-    .pipe(concat('jquery.astrabox.min.js'))
-    .pipe(sourcemaps.init())
-    .pipe(uglify())
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(paths.dest));
-});
+gulp.task('scripts', () => gulp.src(paths.scripts)
+  .pipe(concat('jquery.astrabox.min.js'))
+  .pipe(sourcemaps.init())
+  .pipe(uglify())
+  .pipe(sourcemaps.write('.'))
+  .pipe(gulp.dest(paths.dest)));
 
 gulp.task('default', gulp.series('clean', gulp.parallel('styles', 'scripts')));

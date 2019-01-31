@@ -14,7 +14,8 @@ $(() => {
     const innerImageCoords = $innerImage.offset();
     const $astraboxImg = $('<img class="astrabox-img">');
 
-    $astraboxImg.data('initialImgCoords', {
+    $astraboxImg
+      .data('initialImgCoords', {
         initLeft: innerImageCoords.left,
         initTop: innerImageCoords.top,
       })
@@ -22,7 +23,7 @@ $(() => {
         left: '50%',
         top: '50%',
       })
-      .attr('src', $astraboxLink.attr('href') )
+      .attr('src', $astraboxLink.attr('href'))
       .appendTo($astraboxCont);
 
     return false;
@@ -36,7 +37,7 @@ $(() => {
 
     $astraboxImg.animate({
       left: left + $astraboxImg.width() / 2,
-      top: left + $astraboxImg.height() / 2,
+      top: top + $astraboxImg.height() / 2,
       queue: false,
     }, 500, () => {
       $self.remove();
