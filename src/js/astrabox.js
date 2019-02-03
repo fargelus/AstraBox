@@ -1,4 +1,8 @@
-$(() => {
+(function AstraBox($) {
+  if (!$) {
+    throw new Error('This plugin needs jQuery');
+  }
+
   $('a[data-astrabox]').click((ev) => {
     const $astraboxCont = $('<div>').attr({
       id: 'astrabox-container',
@@ -43,4 +47,4 @@ $(() => {
       $self.remove();
     });
   });
-});
+}(jQuery));

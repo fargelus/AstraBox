@@ -1,4 +1,11 @@
 {
+  "name": "AstraBox",
+  "description": "jQuery lightbox plugin",
+  "version": "0.1",
+  "main": "dist/jquery.astrabox.min.js",
+  "style": "dist/jquery.astrabox.min.css",
+  "author": "fargelus",
+  "license": "GPL-3.0",
   "scripts": {
     "gulp": "./node_modules/.bin/gulp"
   },
@@ -9,6 +16,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.16.0",
     "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^6.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-flatten": "^0.4.0",
     "gulp-rename": "^1.4.0",

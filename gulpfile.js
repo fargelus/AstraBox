@@ -1,16 +1,19 @@
 const gulp = require('gulp');
 
-const del = require('del');
-
+// Styles
 const sourcemaps = require('gulp-sourcemaps');
 const stylus = require('gulp-stylus');
 const rename = require('gulp-rename');
+const autoprefixer = require('gulp-autoprefixer');
 
+// Scripts
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify-es').default;
 
+// Other
 const browserSync = require('browser-sync').create();
 const flatten = require('gulp-flatten');
+const del = require('del');
 
 const paths = {
   styles: './src/styl/*.styl',
@@ -34,6 +37,12 @@ gulp.task('styles', () => gulp.src(paths.styles)
   .pipe(stylus({
     compress: true,
   }))
+  .pipe(
+    autoprefixer({
+      browsers: ['last 5 versions'],
+      cascade: false,
+    }),
+  )
   .pipe(rename('jquery.astrabox.min.css'))
   .pipe(sourcemaps.write('.'))
   .pipe(gulp.dest(paths.dest)));
