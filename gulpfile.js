@@ -22,6 +22,7 @@ const paths = {
   },
   scripts: [
     './src/js/core.js',
+    './src/js/usecase.js',
   ],
   static: './static/**/*.{html,jpeg}',
   dest: './dist',
