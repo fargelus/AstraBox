@@ -25,6 +25,8 @@ gulp.task('browserSync', () => {
   browserSync.init({
     server: paths.dest,
   });
+
+  browserSync.watch(paths.dest).on('change', browserSync.reload);
 });
 
 gulp.task('styles', () => gulp.src(paths.styles)
@@ -47,6 +49,13 @@ gulp.task('static', () => gulp.src(paths.static)
   .pipe(flatten())
   .pipe(gulp.dest(paths.dest)));
 
+gulp.task('watch', () => {
+  gulp.watch(paths.static, gulp.series('static'));
+  gulp.watch(paths.styles, gulp.series('styles'));
+  gulp.watch(paths.scripts, gulp.series('scripts'));
+});
+
 // CLI
 gulp.task('build', gulp.parallel('static', 'styles', 'scripts'));
 gulp.task('prod', gulp.series('clean', 'build'));
+gulp.task('dev', gulp.parallel('watch', 'browserSync'));
