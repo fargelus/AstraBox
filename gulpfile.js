@@ -16,8 +16,13 @@ const flatten = require('gulp-flatten');
 const del = require('del');
 
 const paths = {
-  styles: './src/styl/*.styl',
-  scripts: './src/js/*.js',
+  styles: {
+    bundle: './src/styl/all.styl',
+    all: './src/styl/*.styl',
+  },
+  scripts: [
+    './src/js/core.js',
+  ],
   static: './static/**/*.{html,jpeg}',
   dest: './dist',
 };
@@ -32,7 +37,7 @@ gulp.task('browserSync', () => {
   browserSync.watch(paths.dest).on('change', browserSync.reload);
 });
 
-gulp.task('styles', () => gulp.src(paths.styles)
+gulp.task('styles', () => gulp.src(paths.styles.bundle)
   .pipe(sourcemaps.init())
   .pipe(stylus({
     compress: true,
@@ -60,7 +65,7 @@ gulp.task('static', () => gulp.src(paths.static)
 
 gulp.task('watch', () => {
   gulp.watch(paths.static, gulp.series('static'));
-  gulp.watch(paths.styles, gulp.series('styles'));
+  gulp.watch(paths.styles.all, gulp.series('styles'));
   gulp.watch(paths.scripts, gulp.series('scripts'));
 });
 

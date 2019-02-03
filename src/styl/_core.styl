@@ -3,18 +3,28 @@ a[data-astrabox]
 
 .astrabox-container
   height: 100%
-  background-color: rgba(14, 14, 14, .85)
+  background-color: $astra-bg
   width: 100%
   position: fixed
   left: 0
   top: 0
   z-index: 1
 
-.astrabox-img
+.astrabox-inner
   position: absolute
   left: 0
   top: 0
   z-index: 2
   transform: translate(-50%, -50%)
+
+.astrabox-title
+  font-size: 20px
+  letter-spacing: .8px
+  text-align: center
+  color: $snow
+  margin-bottom: 12px
+  font-weight: normal
+
+.astrabox-img
   width: auto
   height: auto
