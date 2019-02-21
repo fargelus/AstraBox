@@ -18,7 +18,7 @@ const del = require('del');
 const paths = {
   styles: {
     bundle: './src/styl/all.styl',
-    all: './src/styl/*.styl',
+    all: './src/styl/**/*.styl',
   },
   scripts: [
     './src/js/core.js',

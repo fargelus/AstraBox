@@ -5,3 +5,4 @@ env:
     jquery: true
 rules:
   func-names: ["error", "never"]
+  no-param-reassign: 0
