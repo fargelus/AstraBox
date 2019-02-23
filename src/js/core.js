@@ -21,42 +21,53 @@
       };
     }
 
+    function getParentCenter($parent, $el) {
+      return {
+        x: $parent.width() / 2 - $el[0].width / 2,
+        y: $parent.height() / 2 - $el[0].height / 2,
+      };
+    }
+
     function defineHandlers($el) {
       $el.click((ev) => {
+        ev.preventDefault();
+
+        const $initialLinkToImg = $(ev.currentTarget);
+        const title = $initialLinkToImg.attr('data-title') || '';
+        const imgUrl = $initialLinkToImg.attr('href');
+
         const $astraboxCont = $('<div>').attr({
           class: 'astrabox-container',
         });
-
         const $astraboxInner = $('<div>').attr({
           class: 'astrabox-inner',
-        }).appendTo($astraboxCont);
+        });
+        const img = document.createElement('img');
+        img.onload = function () {
+          $astraboxInner.append(this);
 
-        // ссылка на astrabox-картинку
-        const $astraboxLink = $(ev.currentTarget);
-        const title = $astraboxLink.attr('data-title') || '';
+          const containerCenter = getParentCenter($astraboxCont, $(this));
+          const $initialImg = $(ev.target);
+          // координаты относительно целевой картинки
+          const initialImgCoords = $initialImg.offset();
+          $astraboxInner
+            .data('initialImgCoords', {
+              initLeft: initialImgCoords.left,
+              initTop: initialImgCoords.top,
+            })
+            .animate({
+              left: containerCenter.x,
+              top: containerCenter.y,
+            });
+
+          $astraboxCont.show();
+        };
+        img.setAttribute('src', imgUrl);
+        img.classList.add('astrabox-img', 'zoom-in');
+
+        $astraboxInner.appendTo($astraboxCont);
         $astraboxInner.append(`<h6 class="astrabox-title">${title}</h6>`);
-
-        // astrabox - картинка
-        const $innerImage = $(ev.target);
-
-        // координаты относительно целевой картинки
-        const innerImageCoords = $innerImage.offset();
-        $('<img class="astrabox-img zoom-in">').appendTo($astraboxInner);
-
-        $astraboxInner
-          .data('initialImgCoords', {
-            initLeft: innerImageCoords.left,
-            initTop: innerImageCoords.top,
-          })
-          .animate({
-            left: '50%',
-            top: '50%',
-          })
-          .find('.astrabox-img')
-          .attr('src', $astraboxLink.attr('href'));
-
-        $astraboxCont.appendTo('body');
-        return false;
+        $astraboxCont.hide().appendTo('body');
       });
 
       $(document).on('click', '.astrabox-container', (ev) => {
