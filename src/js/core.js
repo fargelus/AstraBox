@@ -4,28 +4,27 @@
   }
 
   $.fn.astrabox = function () {
-    // Используем повторно для перерасчета координат центра картинки
-    function getImageCenterCoords($inner) {
-      const isInner = $inner && $inner.length ? $inner : false;
-      $inner = isInner || $('.astrabox-inner');
-
-      const {
-        initLeft: left,
-        initTop: top,
-      } = $inner.data('initialImgCoords');
-
-      const $astraboxImg = $inner.find('.astrabox-img');
-      return {
-        left: left + $astraboxImg.width() / 2,
-        top: top + $astraboxImg.height() / 2,
-      };
-    }
+    const ZOOM_RATIO = 1.5;
 
     function getParentCenter($parent, $el) {
       return {
         x: $parent.width() / 2 - $el[0].width / 2,
         y: $parent.height() / 2 - $el[0].height / 2,
       };
+    }
+
+    function zoomIn($el) {
+      const w = $el.width();
+      const h = $el.height();
+      $el.width(w * ZOOM_RATIO);
+      $el.height(h * ZOOM_RATIO);
+    }
+
+    function zoomOut($el) {
+      const w = $el.width();
+      const h = $el.height();
+      $el.width(w / ZOOM_RATIO);
+      $el.height(h / ZOOM_RATIO);
     }
 
     function defineHandlers($el) {
@@ -43,6 +42,7 @@
           class: 'astrabox-inner',
         });
         const img = document.createElement('img');
+
         img.onload = function () {
           $astraboxInner.append(this);
 
@@ -77,25 +77,36 @@
         if ($self.closest('.astrabox-inner').length) return;
 
         const $astraboxInner = $self.find('.astrabox-inner');
-        const imgCenterCoords = getImageCenterCoords($astraboxInner);
+        const { initLeft, initTop } = $astraboxInner.data('initialImgCoords');
         $astraboxInner
           .find('.astrabox-title')
           .fadeOut('fast')
           .end()
           .animate({
-            left: imgCenterCoords.left,
-            top: imgCenterCoords.top,
+            left: initLeft,
+            top: initTop,
             queue: false,
           }, 500, () => {
             $self.remove();
           });
       });
 
-      $(document).on('click', '.astrabox-inner', (ev) => {
-        const $self = $(ev.currentTarget);
-        const $img = $self.find('.astrabox-img');
+      $(document).on('click', '.astrabox-img', (ev) => {
+        const $img = $(ev.target);
         $img.toggleClass('zoom-in zoom-out');
-        $self.toggleClass('scale');
+        if ($img.hasClass('zoom-out')) {
+          zoomIn($img);
+        } else {
+          zoomOut($img);
+        }
+
+        const center = getParentCenter($('.astrabox-container'), $img);
+        $img
+          .parent()
+          .css({
+            top: center.y,
+            left: center.x,
+          });
       });
     }
 
